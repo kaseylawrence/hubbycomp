@@ -16,13 +16,19 @@ root.title("Hubby Comp")
 
 def updateLog(text):
     logTextbox.configure(state="normal")
-    logTextbox.delete("1.0", "end")
 
     logTextbox.insert("end", text+"\n")
     logTextbox.configure(state="disabled")
 
+def clearLog():
+    logTextbox.configure(state="normal")
+    logTextbox.delete("1.0", "end")
+    logTextbox.configure(state="disabled")
+
 
 def revComp():
+    clearLog()
+    resultTextbox.delete("1.0", "end")
     sequence = entryTextbox.get("1.0", "end-1c")
     old_chars = "ACGT"
     replace_chars = "TGCA"
@@ -68,7 +74,7 @@ def revComp():
         updateLog("No Sequences found in database. Database might be incomplete")
 
     #print (query)
-    resultTextbox.delete("1.0", "end")
+    
     resultTextbox.insert("1.0", revcomp_result)
     
 
