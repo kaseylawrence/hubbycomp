@@ -1,8 +1,20 @@
 import customtkinter
 import string
 import sqlite3
+import sys
+import os
 
-db  = sqlite3.connect('sequences.db')
+if getattr(sys, 'frozen', False):
+    # Running in a bundled executable
+    base_dir = sys._MEIPASS
+
+else:
+    # Running in a normal Python environment
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+db_path = os.path.join(base_dir, "sequences.db")
+
+db  = sqlite3.connect(db_path)
 if not db:
     print('No connection to database')
 cursor = db.cursor()
@@ -48,7 +60,7 @@ def revComp():
         for uid,iid,i7seq,i5seq,kitname,manuf,indlen in query:
             #print(f"{row['i5_sequence']} found in {row['index_group']} ")
             message = f"{i5seq} found in {kitname}"
-            messageLabel.configure(text=message)
+            #messageLabel.configure(text=message)
             updateLog(message)
         
         #print(f"{query[0][3]} from {query[0][4]}")
@@ -109,8 +121,8 @@ logTextbox.configure(state="disabled")
 logTextbox.pack(pady=12, padx=12)
 
 
-messageLabel = customtkinter.CTkLabel(master=frame, text = "")
-messageLabel.pack(pady=12,padx=12)
+#messageLabel = customtkinter.CTkLabel(master=frame, text = "")
+#messageLabel.pack(pady=12,padx=12)
 
 
 
